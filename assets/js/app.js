@@ -4,6 +4,12 @@ const __PATH__ = window.location.origin;
     appendNotices(response);
     
 })();
+document.querySelector("#search").addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        const response = getNews(this.value);
+        appendNotices(response);
+    }
+});
 
 function getNews(query = null) {
     let r = fetch(`https://microsoft-azure-bing-news-search-v1.p.rapidapi.com/search?q=${query}&mkt=es-AR`, {
@@ -29,6 +35,7 @@ function appendNotices(data){
     }
     
     const container = document.querySelector('.feed-grid');
+    container.innerHTML = "";
     data.then(response =>{
         response.value.forEach(notice => {
             console.log(notice);
